@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: first_line
+  img: 
+  order_num: 1
+
+two:
+  name: sec_line
+  img: image.png
+  order_num: 2

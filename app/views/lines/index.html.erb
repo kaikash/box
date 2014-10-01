@@ -1,0 +1,24 @@
+<%= render "header" %>
+<%= link_to "New line", new_line_path %>
+<%= link_to "Sort", sort_path, method: :patch %>
+<% if @lines.any? %>
+  <table style="border: 1px solid">
+  <tr>
+    <td>Id</td>
+    <td>Line</td>
+    <td>Img</td>
+    <td colspan="2"></td>
+  </tr>
+  <% @lines.each do |line| %>
+    <tr>
+      <td><%= line.id %></td>
+      <td><%= line.name %></td>
+      <td><%= (line.img) ? line.img : "Null" %></td>
+      <td><%= link_to 'Edit', edit_line_path(line) %></td>
+      <td><%= link_to 'Destroy', line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+    </tr>
+  <% end %>
+  </table>
+<% end %>
+<%= render "footer" %>
