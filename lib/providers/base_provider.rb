@@ -1,6 +1,7 @@
 module Provider
 	class Base
-		def call(action, paramsioo)
+		def call(action, params)
+			
 		end
 	end
 end
