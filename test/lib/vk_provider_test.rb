@@ -21,7 +21,7 @@ class ProviderVkTest < ActiveSupport::TestCase
 
 	test "should update" do
 		update = @provider.update @line
-		assert_not_nil JSON.parse(@provider.update)['response']
-		assert_nil JSON.parse(@provider.update)['error']
+		assert_not_nil JSON.parse(update)['response']
+		assert_nil JSON.parse(update)['error']
 	end
 end
