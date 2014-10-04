@@ -6,18 +6,18 @@ module Provider
 		end
 
 		def post_line(provider, line)
-			switch(provider)
+			case provider
 				when :vk
-					params = {attachments: [], access_token: @access_token, storage_id: @storage_id}
+					params = {attachments: [], access_token: @access_token, storage_id: @storage_id, message: line.name}
 					if line.img
-						# params[:attachments] PHOTOPATH
+            photo_path = Provider::API.load_img(:vk, line.img)
+						params[:attachments] = img_path
 					end
 					res = Provider::API.query(:vk, "wall.post", params)
-					# {response:{post_id: 1488}}.to_json
 				when :fb
-          params = {access_token: @access_token, storage_id: @storage_id, }
+          params = {access_token: @access_token, storage_id: @storage_id, message: line.name, type: :feed}
           if line.img
-            # params[:attachments] PHOTOPATH
+            params[:type] = photos
           end
           res = Provider::API.query(:fb, :post, params)
 			end
@@ -25,7 +25,7 @@ module Provider
 		end
 
 		def update_line(provider, line)
-			switch(provider)
+			case provider
 				when :vk
 					{response:{post_id: 1488}}.to_json
 				when :fb
@@ -33,7 +33,7 @@ module Provider
 		end
 
 		def delete_line(provider, line_id)
-			switch(provider)
+			case provider
 				when :vk
 					{response: 1}.to_json
 				when :fb
