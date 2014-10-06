@@ -1,6 +1,6 @@
 class Provider::Vk < Provider::Base
 	@storage_id = "75576142"
-	@access_token = "e955792857a63ae29d4a2a66df1bfd35f4c8b9d085382f91c85c012143087957fcbe7230c7fbbf0cf8634"
+	@access_token = "3bf52a682cf1a0c591582a2a49a6d4f63a4be9afe97303f29a023de8ed902ea2cdf6ca86cee332b322576"
 
 	def initialize
 	end

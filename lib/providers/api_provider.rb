@@ -1,4 +1,4 @@
-class Providers::API
+class Provider::API
 	def query(provider, method, params)
     case provider
       when :vk
@@ -16,15 +16,22 @@ class Providers::API
             uri = URI(URI::endcode(url))
             req = Net::HTTP::Post.new(uri.request_uri)
             req.set_form_data pars
+          when :delete
+            url = "https://graph.facebook.com/v2.1/#{params[:post_id]}?access_token=#{params[:access_token]}"
+            uri = URI(URI::endcode(url))
+            req = Net::HTTP::Delete.new(uri.request_uri)
         end
         http = Net::HTTP.new(uri.host, uri.port)
         res = http.request req
     end
-    res
+    res.to_json
 	end
 
   def load_img(provider, img)
-    # code
+    res = case provider
+      when :vk
+    end
+    res
   end
 
   private

@@ -1,5 +1,7 @@
+# require "#{Rails.root}/lib/providers/api_provider"
 module Provider
 	class Base
+		include Provider::API
 		def call(action, params)
 			return {error:{error_msg: "Missing line", error_code: 1488}}.to_json if(!params[:line])
 			method(action.to_s + "_line").call(self.class.name.split("::")[1].downcase.to_sym, params[:line])
@@ -33,11 +35,14 @@ module Provider
 		end
 
 		def delete_line(provider, line_id)
-			case provider
+			params = {post_id: line_id}
+			method = case provider
 				when :vk
-					{response: 1}.to_json
+					"wall.delete"
 				when :fb
-			end
+					:delete
+				end
+				Provider::API.query(provider, method, params)
 		end
 	end
 end
