@@ -3,9 +3,11 @@
 one:
   name: first_line
   img: 
+  provider_ids: "{\"vk_id\":526}"
   order_num: 1
 
 two:
   name: sec_line
-  img: image.png
+  img: 
+  provider_ids:
   order_num: 2

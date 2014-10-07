@@ -1,8 +1,7 @@
 class Provider::Vk < Provider::Base
-	@storage_id = "75576142"
-	@access_token = "3bf52a682cf1a0c591582a2a49a6d4f63a4be9afe97303f29a023de8ed902ea2cdf6ca86cee332b322576"
-
 	def initialize
+		@storage_id = Rails.application.secrets.vk_storage_id
+		@access_token = Rails.application.secrets.vk_access_token
 	end
 
 	def post(line)
@@ -19,4 +18,26 @@ class Provider::Vk < Provider::Base
 		params = { line: line_id }
 		call :delete, params
 	end
+
+  private
+	def query(method, params)
+		url = "https://api.vk.com/method/#{method}?#{parseParams params}"
+    uri = URI(URI::encode(url))
+    req = Net::HTTP::Get.new(uri.request_uri)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    res = http.request req
+    JSON.parse(res.body)
+	end
+
+	def load_img(img)
+	end
+
+  def parseParams(params)
+    res = params.map do |key, value|
+      "#{key}=#{value}"
+    end
+    res.join "&"
+  end
 end
