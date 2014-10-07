@@ -1,18 +1,36 @@
 require 'singleton'
-
 class Publisher 
   include Singleton
-  @providers = [Provider::FB.new, Provider::VK.new]
 
   def post(line)
-    @providers.each { |provider| provider.post line }
+    res = {}
+    @providers.each do |provider_name, provider|
+      res[provider_name] = provider.post line
+    end
+    res
   end
 
   def update(line)
-    @providers.each { |provider| provider.update line }
+    res = {}
+    @providers.each do |provider_name, provider|
+      res[provider_name] = provider.update line
+    end
+    res
   end
 
-  def delete(line)
-    @providers.each { |provider| provider.delete line }
+  def delete(line_id)
+    res = {}
+    @providers.each do |provider_name, provider|
+      res[provider_name] = provider.delete line_id
+    end
+    res
+  end
+    
+  def alala
+    @providers
+  end
+
+  def initialize
+    @providers = {fb: Providers::Fb.new, vk: Providers::Vk.new}
   end
 end

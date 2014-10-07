@@ -32,6 +32,7 @@ class LinesController < ApplicationController
 
 		if @line.save
 			redirect_to lines_path
+			raise Publisher.instance.post(@line).inspect
 		else
 			render :new
 		end

@@ -1,4 +1,4 @@
-module Provider
+module Providers
 	class Base
 		def call(action, params)
 			return {error:{error_msg: "Missing line", error_code: 1488}}.to_json if(!params[:line])

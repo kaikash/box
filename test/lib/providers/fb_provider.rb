@@ -1,9 +1,9 @@
 require 'test_helper'
-require "#{Rails.root}/lib/providers/base_provider"
-require "#{Rails.root}/lib/providers/fb_provider"
+# require "#{Rails.root}/lib/providers/base_provider"
+# require "#{Rails.root}/lib/providers/fb_provider"
 class ProviderVkTest < ActiveSupport::TestCase
   setup do
-    @provider = Provider::Fb.new
+    @provider = ::Providers::Fb.new
     @line = lines :one
   end
 
