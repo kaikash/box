@@ -29,10 +29,12 @@ class LinesController < ApplicationController
 
 	def create
 		@line = Line.new line_params
-
+		
 		if @line.save
+			unless Publisher.instance.post(@line)
+				
+			end
 			redirect_to lines_path
-			raise Publisher.instance.post(@line).inspect
 		else
 			render :new
 		end
