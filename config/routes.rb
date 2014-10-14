@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :lines, except: [:show]
-  patch '/sort', to: "lines#sort"   
+  resources :lines
+  patch '/sort', to: "lines#sort"
+  patch '/sync', to: "lines#sync"   
   root "lines#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

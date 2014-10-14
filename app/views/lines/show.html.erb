@@ -1,2 +1,20 @@
-<% render "header" %>
-<% render "footer" %>
+<%= render "header" %>
+<%= link_to 'Edit', edit_line_path(@line) %>
+<%= link_to 'Destroy', @line, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Synchronize', sync_path, method: :patch %>
+<table style="1px solid black">
+  <tr>
+    <td>Name</td>
+    <td>FB id</td>
+    <td>VK id</td>
+  </tr>
+  <tr>
+		<td><%= @line.name %></td>
+		<% @line.storages.each do |storage| %>
+    <td><%= storage.state if storage.state == 'error' %>
+      <%= storage.params_obj['post_id'] if storage.state == 'success' %></td>
+		<% end %>
+  <tr></tr>
+</table>
+<%= link_to "Back", lines_path %>
+<%= render "footer" %>

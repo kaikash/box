@@ -27,18 +27,43 @@ class LinesController < ApplicationController
 		@line = Line.new
 	end
 
+	def show
+		@line = Line.find params[:id]
+	end
+
 	def create
 		@line = Line.new line_params
 		
 		if @line.save
-			unless Publisher.instance.post(@line)
-				
+			post = Publisher.instance.post(@line)
+			post.each do |provider, res|
+				if res['error']
+          s = Storage.new({state: "error"})
+          s.provider = Provider.find((provider == :vk) ? 1 : 2)
+				else
+          s = Storage.new({state: "success"})
+          case provider
+          when :vk
+            s.provider = Provider.find 1
+            s.params_obj = {post_id: res['response']['post_id']}
+          when :fb
+            s.provider = Provider.find 2
+            s.params_obj = {post_id: (@line.img.file) ? res['response']['post_id'] : res['response']['id']}
+          end
+				end
+        @line.storages << s
 			end
+			@line.save
+
 			redirect_to lines_path
 		else
 			render :new
 		end
 	end
+
+  def sync
+    raise "allala"
+  end
 
 	def edit
 		@line = Line.find params[:id]

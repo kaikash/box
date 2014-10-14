@@ -11,15 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141007132604) do
+ActiveRecord::Schema.define(version: 20141014121306) do
 
   create_table "lines", force: true do |t|
     t.text     "name"
     t.string   "img"
-    t.integer  "order_num"
+    t.float    "order_num"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "provider_ids"
   end
+
+  create_table "lines_storages", id: false, force: true do |t|
+    t.integer "line_id"
+    t.integer "storage_id"
+  end
+
+  add_index "lines_storages", ["line_id"], name: "index_lines_storages_on_line_id"
+  add_index "lines_storages", ["storage_id"], name: "index_lines_storages_on_storage_id"
+
+  create_table "providers", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "storages", force: true do |t|
+    t.integer  "provider_id"
+    t.text     "params",      default: "{\"error\":\"Error\"}"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "storages", ["provider_id"], name: "index_storages_on_provider_id"
 
 end

@@ -6,10 +6,6 @@ class Publisher
     res = {}
     @providers.each do |provider_name, provider|
       res[provider_name] = provider.post line
-      if res[provider_name]["error"]
-        sync
-        return false
-      end
     end
     res
   end
@@ -18,10 +14,6 @@ class Publisher
     res = {}
     @providers.each do |provider_name, provider|
       res[provider_name] = provider.update line
-      if res[provider_name]["error"]
-        sync
-        return false
-      end
     end
     res
   end
@@ -30,10 +22,6 @@ class Publisher
     res = {}
     @providers.each do |provider_name, provider|
       res[provider_name] = provider.delete line_id
-      if res[provider_name]["error"]
-        sync
-        return false
-      end
     end
     res
   end
