@@ -9,11 +9,13 @@
     <td>VK id</td>
   </tr>
   <tr>
-		<td><%= @line.name %></td>
-		<% @line.storages.each do |storage| %>
-    <td><%= storage.state if storage.state == 'error' %>
-      <%= storage.params_obj['post_id'] if storage.state == 'success' %></td>
-		<% end %>
+    <td><%= @line.name %></td>
+    <% @line.storages.each do |storage| %>
+    <td>
+      <%= storage.state if storage.state == 'error' %>
+      <%= storage.post_id if storage.state == 'success' %>
+      </td>
+    <% end %>
   <tr></tr>
 </table>
 <%= link_to "Back", lines_path %>

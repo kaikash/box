@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20141014121306) do
 
   create_table "storages", force: true do |t|
     t.integer  "provider_id"
-    t.text     "params",      default: "{\"error\":\"Error\"}"
+    t.text     "post_id"
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"

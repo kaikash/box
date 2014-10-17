@@ -18,10 +18,15 @@ class Publisher
     res
   end
 
-  def delete(line_id)
+  def delete(line)
     res = {}
     @providers.each do |provider_name, provider|
-      res[provider_name] = provider.delete line_id
+      line_to_delete = line.storages.joins(:provider).find_by("providers.name" => provider_name, state: "success")
+      if line_to_delete
+        res[provider_name] = provider.delete line_to_delete.post_id 
+      else 
+        res[provider_name] = {response: 1}.to_json
+      end
     end
     res
   end
