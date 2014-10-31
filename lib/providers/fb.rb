@@ -36,7 +36,7 @@ module Providers
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_PEER
       res = http.request req
-      JSON.parse(res.body)
+      raise JSON.parse(res.body).inspect
   	end
   end
 end
