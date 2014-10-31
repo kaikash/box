@@ -44,7 +44,7 @@ class LinesController < ApplicationController
   end
 
   def sync
-    @lines = Lines.all
+    @lines = Line.all
     Publisher.instance.sync @lines
   end
 

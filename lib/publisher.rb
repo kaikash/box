@@ -37,8 +37,27 @@ class Publisher
     res
   end
     
-  def sync
+  def sync(lines)
     # sync
+    # res = []
+    # lines.each do |line|
+      # post line unless line.get
+      # providers.each do |p|
+        # p.post unless p.get line.
+      # end
+    # end
+
+    # if Line.find_by_id(19)
+      # raise "found"
+    # else
+      # raise "not found"
+    # end
+    # providers.each do |p|
+      # p.get_all.each do |remote_post|
+        # p.delete remote_post['id'] unless Line.find_by_id(remote_post['id'])
+      # end
+    # end
+    # raise res.inspect
   end
 
   def initialize

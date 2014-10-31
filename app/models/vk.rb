@@ -8,6 +8,17 @@ class Vk < Provider
     res = query "wall.post", params
   end
 
+  def get(post_id)
+    params = {access_token: access_token, posts: form_posts_id post_id}
+    if query("wall.get", params)['response'] == []
+      return false
+    end
+    return true
+  end
+
+  def get_all
+  end
+
   def update(line)
     # params = { line: line }
     # call :update, params
@@ -30,6 +41,9 @@ class Vk < Provider
   end
 
   private
+  def form_posts_id(post_id)
+    "#{storage_id}_#{post_id}"
+  end
   def load_img(img)
     # Code..
   end
