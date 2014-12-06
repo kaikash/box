@@ -14,6 +14,14 @@ class Fb < Provider
     # call :update, params
   end
 
+  def get_all_ids
+    []
+  end
+
+  def get(post_id)
+    true
+  end
+
   def delete(post_id)
     params = {post_id: post_id, access_token: access_token}
     query :delete, params

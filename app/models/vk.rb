@@ -9,14 +9,18 @@ class Vk < Provider
   end
 
   def get(post_id)
-    params = {access_token: access_token, posts: form_posts_id post_id}
-    if query("wall.get", params)['response'] == []
+    params = {access_token: access_token, posts: form_posts_id(post_id)}
+    if query("wall.getById", params)['response'] == []
       return false
     end
     return true
   end
 
-  def get_all
+  def get_all_ids
+    params = {access_token: access_token, owner_id: storage_id}
+    q = query("wall.get", params)
+    return [] if q['error']
+    res = q['response'][1..-1].map {|post| post['id']}
   end
 
   def update(line)
@@ -30,7 +34,9 @@ class Vk < Provider
   end
 
   def query(method, params)
+    params[:version] = api_version
     url = "https://api.vk.com/method/#{method}?#{parse_params params}"
+    # raise url
     uri = URI(URI::encode(url))
     req = Net::HTTP::Get.new(uri.request_uri)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -44,8 +50,13 @@ class Vk < Provider
   def form_posts_id(post_id)
     "#{storage_id}_#{post_id}"
   end
+
   def load_img(img)
     # Code..
+  end
+
+  def api_version
+    "5.27"
   end
 
   def parse_params(params)

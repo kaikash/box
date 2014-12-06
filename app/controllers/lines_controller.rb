@@ -46,6 +46,8 @@ class LinesController < ApplicationController
   def sync
     @lines = Line.all
     Publisher.instance.sync @lines
+
+    redirect_to lines_path
   end
 
   def edit

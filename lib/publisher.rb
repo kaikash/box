@@ -38,26 +38,28 @@ class Publisher
   end
     
   def sync(lines)
-    # sync
-    # res = []
-    # lines.each do |line|
-      # post line unless line.get
-      # providers.each do |p|
-        # p.post unless p.get line.
-      # end
-    # end
+    # Додумать, может стоит создавать новый объект
+    lines.each do |line|
+      line.storages.each do |s|
+        unless s.provider.get s.post_id
+          new_post = s.provider.post line
+          if
+            s.post_id = new_post['response']['post_id']
+            s.state = "success"
+          else
+            s.state = "error"
+          end
+        end
+        s.save
+      end
+    end
 
-    # if Line.find_by_id(19)
-      # raise "found"
-    # else
-      # raise "not found"
-    # end
-    # providers.each do |p|
-      # p.get_all.each do |remote_post|
-        # p.delete remote_post['id'] unless Line.find_by_id(remote_post['id'])
-      # end
-    # end
-    # raise res.inspect
+    providers.each do |p|
+      p.get_all_ids.each do |remote_post_id|
+        l = Line.joins(:storages).where(storages: {post_id: remote_post_id, provider_id: p.id}).any?
+        p.delete remote_post_id unless l
+      end
+    end
   end
 
   def initialize
