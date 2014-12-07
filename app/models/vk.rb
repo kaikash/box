@@ -9,11 +9,12 @@ class Vk < Provider
   end
 
   def get(post_id)
-    params = {access_token: access_token, posts: form_posts_id(post_id)}
-    if query("wall.getById", params)['response'] == []
+    params = {access_token: access_token, posts: form_post_id(post_id)}
+    p = query("wall.getById", params)
+    if p['response'] == [] || p['error']
       return false
     end
-    return true
+    true
   end
 
   def get_all_ids
@@ -47,7 +48,7 @@ class Vk < Provider
   end
 
   private
-  def form_posts_id(post_id)
+  def form_post_id(post_id)
     "#{storage_id}_#{post_id}"
   end
 
