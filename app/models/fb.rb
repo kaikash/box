@@ -15,7 +15,7 @@ class Fb < Provider
   end
 
   def get_all_ids
-    params = {access_token: access_token, post_id: "#{storage_id}/feed"}
+    params = {access_token: access_token, adr: [storage_id, "feed"]}
     q = query(:get, params)
     return [] if q['error']
     res = q['data'].map do |post|
@@ -31,7 +31,7 @@ class Fb < Provider
   end
 
   def get(post_id)
-    params = {access_token: access_token, post_id: post_id}
+    params = {access_token: access_token, adr: [post_id]}
     p = query(:get, params)
     if p['error']
       return false
@@ -47,7 +47,7 @@ class Fb < Provider
   def query(method, params)
     case method
     when :get
-      url = "https://graph.facebook.com/#{api_version}/#{params[:post_id]}?access_token=#{params[:access_token]}"
+      url = "https://graph.facebook.com/#{api_version}/#{make_url(params[:adr])}?access_token=#{params[:access_token]}"
       # raise url
       uri = URI(URI::encode(url))
       req = Net::HTTP::Get.new(uri.request_uri)
@@ -78,6 +78,10 @@ class Fb < Provider
 
   def api_version
     "v2.2"
+  end
+
+  def make_url(params)
+    params.join "/"
   end
 
   def user_id

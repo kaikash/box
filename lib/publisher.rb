@@ -34,6 +34,7 @@ class Publisher
           new_post = s.provider.post line
           if new_post['error']
             s.state = "error"
+            s.post_id = nil
           else
             s.post_id = s.provider.type == "Vk" ? new_post['response']['post_id'] : line.img.file ? new_post['post_id'] : new_post['id']
             s.state = "success"
