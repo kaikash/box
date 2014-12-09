@@ -5,7 +5,7 @@ class Publisher
   def post(line)
     res = {}
     providers.each do |p|
-      res[p.name] = p.post line
+      res[p.name] = p.service.post line
     end
     res
   end
@@ -22,7 +22,7 @@ class Publisher
   def delete(line)
     res = {}
     line.storages.where(state: :success).each do |s|
-      res[s.provider.name] = s.provider.delete s.post_id    
+      res[s.provider.name] = s.provider.service.delete s.post_id    
     end
     res
   end
@@ -30,8 +30,8 @@ class Publisher
   def sync(lines)
     lines.each do |line|
       line.storages.each do |s|
-        unless s.provider.get s.post_id
-          new_post = s.provider.post line
+        unless s.provider.service.get s.post_id
+          new_post = s.provider.service.post line
           if new_post['error']
             s.state = "error"
             s.post_id = nil
@@ -45,14 +45,11 @@ class Publisher
     end
 
     providers.each do |p|
-      p.get_all_ids.each do |remote_post_id|
+      p.service.get_all_ids.each do |remote_post_id|
         l = Line.joins(:storages).where(storages: {post_id: remote_post_id, provider_id: p.id}).any?
-        p.delete remote_post_id unless l
+        p.service.delete remote_post_id unless l
       end
     end
-  end
-
-  def initialize
   end
 
   private

@@ -27,6 +27,8 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'carrierwave'
+
+gem 'dotenv-rails', :groups => [:development, :test]
 # gem 'SecureRandom'
 
 # Use ActiveModel has_secure_password
