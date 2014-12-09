@@ -44,8 +44,6 @@ class Publisher
       end
     end
 
-    # raise providers[1].get_all_ids.inspect
-
     providers.each do |p|
       p.get_all_ids.each do |remote_post_id|
         l = Line.joins(:storages).where(storages: {post_id: remote_post_id, provider_id: p.id}).any?
@@ -55,7 +53,6 @@ class Publisher
   end
 
   def initialize
-    # @providers = {fb: Providers::Fb.new, vk: Providers::Vk.new}
   end
 
   private

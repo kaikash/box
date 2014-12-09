@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :lines
+  resources :lines, :except => [:edit, :update]
   patch '/sort', to: "lines#sort"
   patch '/sync', to: "lines#sync"   
   root "lines#index"

@@ -15,7 +15,6 @@
       <td><%= line.id %></td>
       <td><%= link_to line.name, line_path(line) %></td>
       <td><%= (line.img) ? line.img : "Null" %></td>
-      <td><%= link_to 'Edit', edit_line_path(line) %></td>
       <td><%= link_to 'Destroy', line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
     </tr>

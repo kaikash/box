@@ -2,8 +2,10 @@ require 'test_helper'
 
 class LineControllerTest < ActionController::TestCase
   setup do
+    @providers = Provider.all
     @controller = LinesController.new
     @line = lines :one
+    @line2 = lines :two
   end
 
   test "should get index" do
@@ -17,15 +19,20 @@ class LineControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, id: @line
+  # test "should get edit" do
+  #   get :edit, id: @line
+  #   assert_response :success
+  # end
+
+  test "should get show" do
+    get :show, id: @line
     assert_response :success
   end
 
-  test "should update line" do
-    patch :update, id: @line, line: {name: @line.name, img: @line.img}
-    assert_redirected_to lines_path
-  end
+  # test "should update line" do
+  #   patch :update, id: @line, line: {name: @line.name, img: @line.img}
+  #   assert_redirected_to lines_path
+  # end
 
   test "should create line" do
     assert_difference('Line.count') do 
@@ -47,6 +54,21 @@ class LineControllerTest < ActionController::TestCase
       delete :destroy, id: @line
     end
 
+    assert_redirected_to lines_path
+  end
+
+  test "should sync" do
+    @providers.each do |provider|
+      provider.post @line
+      provider.post @line2
+      provider.post @line
+      provider.post @line2
+    end
+    patch :sync
+    @providers.each do |provider|
+      assert_equal provider.get(Line.joins(:storage).where(id: @line.id, storages: {provider_id: provider.id})), true
+      assert_equal provider.get(Line.joins(:storage).where(id: @line2.id, storages: {provider_id: provider.id})), true
+    end
     assert_redirected_to lines_path
   end
 end

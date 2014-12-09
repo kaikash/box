@@ -50,18 +50,18 @@ class LinesController < ApplicationController
     redirect_to lines_path
   end
 
-  def edit
-    @line = Line.find params[:id]
-  end
+  # def edit
+  #   @line = Line.find params[:id]
+  # end
 
-  def update
-    @line = Line.find params[:id]
-    if @line.update line_params 
-      redirect_to lines_path
-    else
-      render 'edit'
-    end
-  end
+  # def update
+  #   @line = Line.find params[:id]
+  #   if @line.update line_params 
+  #     redirect_to lines_path
+  #   else
+  #     render 'edit'
+  #   end
+  # end
 
   def destroy
     @line = Line.find params[:id]
