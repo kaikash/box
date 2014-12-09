@@ -1,28 +1,22 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Box is very useful app
 
-Things you may want to cover:
+You can:
 
-* Ruby version
+* Post
+* Delete
+* Synchronize
+* Sort
+* e.t.c.
 
-* System dependencies
+Also, you should create file <tt>.env</tt> in the root of the project. And it should contain:
+DEV_SECRET_KEY_BASE=YOURSECRETKEY
+TEST_SECRET_KEY_BASE=YOURSECRETKEY
+PROD_SECRET_KEY=YOURSECRETKEY
+FB_STORAGE_ID=YOURFBSTORAGEID
+VK_STORAGE_ID=YOURVKSTORAGEID
+FB_USER_ID=YOURFBUSERID
+VK_ACCESS_TOKEN=YOURFBSTORAGEID
+FB_ACCESS_TOKEN=YOURVKSTORAGEID
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
