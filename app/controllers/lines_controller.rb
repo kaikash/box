@@ -8,7 +8,6 @@ class LinesController < ApplicationController
     @lines = @lines.sort_by {|line| line.name.length }
     @lines = @lines.each_with_index {|line, index| line.order_num = index + 1 }
     save_all
-
     redirect_to lines_path
   end
 
